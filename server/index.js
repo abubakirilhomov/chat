@@ -7,7 +7,8 @@ const app = express();
 
 app.use(cors({
   origin: 'https://chat-quiz-front.vercel.app',
-  methods: ['GET', 'POST']
+  methods: ['GET', 'POST'],
+  credentials: true
 }));
 
 const server = new Server(app);
