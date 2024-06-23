@@ -17,15 +17,15 @@
   "routes": [
     {
       "src": "/socket.io/(.*)",
-      "dest": "/server/server.js"
+      "dest": "/"
     },
     {
       "src": "/api/(.*)",
-      "dest": "/server/server.js"
+      "dest": "/"
     },
     {
       "src": "/(.*)",
-      "dest": "/client/$1"
+      "dest": "/"
     }
   ]
 }
