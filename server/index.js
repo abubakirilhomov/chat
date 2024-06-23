@@ -11,7 +11,7 @@ app.use(cors({
   credentials: true
 }));
 
-const server = new Server(app);
+const server = Server(app);
 
 const io = socketIo(server, {
   cors: {
@@ -59,6 +59,6 @@ io.on('connection', (socket) => {
 });
 
 const PORT = process.env.PORT || 4000;
-server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-
-module.exports = app;
+server.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});

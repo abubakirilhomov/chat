@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import io from 'socket.io-client';
 
-const socket = io('https://chat-quiz-back.vercel.app');
+const socket = io('https://chat-backend-9ul8i70wy-abubakirs-projects-3f24ba9c.vercel.app/');
 
 const quizQuestions = [
   { question: "What is the capital of Spain?" },

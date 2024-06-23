@@ -3,7 +3,7 @@ import io from 'socket.io-client';
 import { useSelector } from 'react-redux';
 import DEFAULT_AVATAR_URL from '../assets/images/user-default-image.png';
 
-const socket = io('https://chat-quiz-back.vercel.app');
+const socket = io('https://chat-backend-9ul8i70wy-abubakirs-projects-3f24ba9c.vercel.app/');
 
 function Chat({ room }) {
   const [message, setMessage] = useState('');
