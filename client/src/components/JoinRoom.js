@@ -24,6 +24,7 @@ const JoinRoom = () => {
           onChange={handleChange} 
           type="number" 
           placeholder='type ID room' 
+          required
           className='bg-transparent placeholder:text-primary border-2 rounded-lg border-primary py-2 px-4 outline-none text-primary' 
         />
         <div className='flex items-center gap-2 justify-center'>
