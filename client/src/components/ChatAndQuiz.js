@@ -12,8 +12,10 @@ const ChatAndQuiz = () => {
       <div className=''>
         <ExitButton room={roomId}/>
       </div>
+       <div className='sm:flex sm:flex-col'>
         <Chat room={roomId} /> 
         <Quiz room={roomId}/>
+       </div>
     </div>
   );
 };
