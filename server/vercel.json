@@ -3,7 +3,7 @@
       {
         "source": "/(.*)",
         "headers": [
-          { "key": "Content-Security-Policy", "value": "default-src 'self'; script-src 'self' https://vercel.live" }
+          { "key": "Content-Security-Policy", "value": "default-src 'self'; script-src 'self' https://vercel.live; connect-src 'self' https://chat-quiz-front.vercel.app" }
         ]
       }
     ]
