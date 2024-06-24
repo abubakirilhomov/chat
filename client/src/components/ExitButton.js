@@ -9,20 +9,22 @@ const ExitButton = () => {
   const dispatch = useDispatch();
 
   const handleExit = () => {
-    // Удалить значения из localStorage
+    // Remove values from localStorage
     localStorage.removeItem('nickname');
     localStorage.removeItem('room');
+    localStorage.removeItem('quiz_answers'); // Assuming 'quiz_answers' is the key used for storing quiz answers
+    localStorage.removeItem('messages'); // Assuming 'messages' is the key used for storing chat messages
 
-    // Сбросить значения в Redux
+    // Reset values in Redux
     dispatch(setNickname(''));
     dispatch(setRoom(''));
 
-    // Перенаправить пользователя на начальную страницу
+    // Redirect user to the initial page
     navigate('/');
   };
 
   return (
-    <button onClick={handleExit} className="p-2 bg-red-500 text-white rounded-md hover:bg-red-600">
+    <button onClick={handleExit} className="p-2 bg-red-500 absolute top-10 text-white rounded-md hover:bg-red-600">
       Exit Chat
     </button>
   );
