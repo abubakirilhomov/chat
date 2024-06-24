@@ -8,11 +8,11 @@ const ChatAndQuiz = () => {
   const { roomId } = useParams(); // Получаем номер комнаты из URL
 
   return (  
-    <div className="flex items-center justify-center min-h-screen bg-gray-100 sm:mt-8 sm:py-5">
+    <div className="flex items-center justify-center min-h-screen bg-gray-100 sm:mt-8 xl:mt-0 sm:py-5">
       <div className=''>
         <ExitButton room={roomId}/>
       </div>
-       <div className='sm:flex sm:flex-col'>
+       <div className='sm:flex sm:flex-col xl:flex'>
         <Chat room={roomId} /> 
         <Quiz room={roomId}/>
        </div>
