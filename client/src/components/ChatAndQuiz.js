@@ -12,7 +12,7 @@ const ChatAndQuiz = () => {
       <div className=''>
         <ExitButton room={roomId}/>
       </div>
-       <div className='sm:flex sm:flex-col xl:flex'>
+       <div className='sm:flex sm:flex-col xl:flex xl:gap-3'>
         <Chat room={roomId} /> 
         <Quiz room={roomId}/>
        </div>
