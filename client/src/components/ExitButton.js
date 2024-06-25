@@ -24,8 +24,8 @@ const ExitButton = ({ room }) => {
   };
 
   return (
-    <button onClick={handleExit} className="p-2 bg-red-500 absolute top-10 text-white rounded-md hover:bg-red-600">
-      Exit Chat
+    <button onClick={handleExit} className="p-2 btn btn-warning min-w-[19.5%] max-w-[20%] mb-5 text-white rounded-md">
+      Back to Home
     </button>
   );
 };
