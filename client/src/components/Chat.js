@@ -3,7 +3,7 @@ import io from 'socket.io-client';
 import { useSelector } from 'react-redux';
 import DEFAULT_AVATAR_URL from '../assets/images/user-default-image.png';
 
-const socket = io('https://chat-back-1-eg9f.onrender.co');
+const socket = io('https://chat-back-1-eg9f.onrender.com');
 
 function Chat({ room }) {
   const [message, setMessage] = useState('');
