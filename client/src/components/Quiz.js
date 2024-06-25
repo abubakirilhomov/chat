@@ -175,9 +175,6 @@ function Quiz({ room }) {
                   effect="blur"
                 />
               </div>
-              {quizMessages.map((msg, index) => (
-                <div key={index} className="mb-2 p-2 bg-gray-200 rounded-md">{msg}</div>
-              ))}
             </>
           ) : (
             <div className="text-center text-green-600 text-xl">
