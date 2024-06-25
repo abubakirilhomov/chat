@@ -163,10 +163,10 @@ function Quiz({ room }) {
         <div className="mb-2 p-2 bg-warning text-white rounded-md">
           {currentQuestion?.question}
         </div>
-        <div className="min-h-[55%] overflow-y-scroll mb-4 border border-warning border-opacity-25 rounded-md p-2">
+        <div className="min-h-[55%] overflow-y-scroll flex justify-center items-center mb-4 border border-warning border-opacity-25 rounded-md p-2">
           {!quizCompleted ? (
             <>
-              <div className="flex justify-center mb-4">
+              <div className="flex justify-center items-center mb-4">
                 <LazyLoadImage
                   alt={image.alt}
                   height={image.height}
