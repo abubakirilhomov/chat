@@ -174,7 +174,6 @@ function Quiz({ room }) {
                   width={image.width}
                   effect="blur"
                 />
-                <span>{image.caption}</span>
               </div>
               {quizMessages.map((msg, index) => (
                 <div key={index} className="mb-2 p-2 bg-gray-200 rounded-md">{msg}</div>
