@@ -12,7 +12,7 @@ const ChatAndQuiz = () => {
       <ExitButton room={roomId}/>
 
       <div className="flex justify-between bg-base-100">
-        <div className='pw-3/12'>
+        <div className='pw-3/12 max-w-[20%]'>
           <Chat room={roomId} /> 
         </div>
         <div className='w-9/12 flex flex-col xl:flex-row xl:gap-4'>

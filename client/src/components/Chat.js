@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import io from 'socket.io-client';
 import { useSelector } from 'react-redux';
 import DEFAULT_AVATAR_URL from '../assets/images/user-default-image.png';
+import { IoSend } from "react-icons/io5";
+
 
 const socket = io('https://chat-back-1-eg9f.onrender.com');
 
@@ -75,11 +77,11 @@ function Chat({ room }) {
                   </div>
                 </div>
               )}
-              <div className={`p-2 rounded-lg ${msg.isSentByMe ? 'bg-blue-500 text-white' : 'bg-gray-300 text-black'}`}>
+              <div className={`p-2 rounded-lg max-w-[80%] ${msg.isSentByMe ? 'bg-blue-500 text-white' : 'bg-gray-300 text-black'}`}>
                 <div className="text-sm">
                   {msg.sender.nickname} <span className="text-xs opacity-70">{msg.time}</span>
                 </div>
-                <div className="text-base">
+                <div className="text-base break-words whitespace-pre-wrap">
                   {msg.text}
                 </div>
                 <div className="text-xs opacity-50">
@@ -107,9 +109,9 @@ function Chat({ room }) {
           />
           <button
             onClick={sendMessage}
-            className="btn btn-warning rounded-none h-full py-4 focus:outline-none max-h-10 text-white rounded-r-md "
+            className="btn btn-warning rounded-none py-4 px-2 focus:outline-none max-h-10 text-white rounded-r-md "
           >
-            Send
+            <IoSend /> Send
           </button>
         </div>
       </div>

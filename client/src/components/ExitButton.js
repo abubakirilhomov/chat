@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setNickname } from '../slices/NickNameSlice';
 import { setRoom } from '../slices/RoomSlice';
+import { IoMdHome } from "react-icons/io";
+
 
 const ExitButton = ({ room }) => {
   const navigate = useNavigate();
@@ -24,8 +26,8 @@ const ExitButton = ({ room }) => {
   };
 
   return (
-    <button onClick={handleExit} className="p-2 btn btn-warning min-w-[19.5%] max-w-[20%] mb-5 text-white rounded-md">
-      Back to Home
+    <button onClick={handleExit} className="p-2 flex items-center text-lg btn btn-warning min-w-[19.5%] max-w-[20%] mb-5 text-white rounded-md">
+      <IoMdHome /> Back to Home
     </button>
   );
 };

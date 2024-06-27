@@ -103,16 +103,15 @@ const quizQuestions = [
   }
 ];
 
-
 function shuffleArray(array) {
   return array.sort(() => Math.random() - 0.5);
 }
 
 function Quiz({ room }) {
-  const [answer, setAnswer] = useState('');
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [quizMessages, setQuizMessages] = useState([]);
   const [currentVariants, setCurrentVariants] = useState([]);
+  const [quizCompleted, setQuizCompleted] = useState(false); // State to track quiz completion
 
   useEffect(() => {
     if (room) {
@@ -133,10 +132,36 @@ function Quiz({ room }) {
   }, [room]);
 
   useEffect(() => {
+    // Load the current question index from localStorage
+    const savedQuestionIndex = parseInt(localStorage.getItem(`currentQuestionIndex_${room}`), 10);
+    if (!isNaN(savedQuestionIndex) && savedQuestionIndex < quizQuestions.length) {
+      setCurrentQuestionIndex(savedQuestionIndex);
+    }
+
+    // Load the quiz messages from localStorage
+    const savedQuizMessages = JSON.parse(localStorage.getItem(`quizMessages_${room}`));
+    if (savedQuizMessages) {
+      setQuizMessages(savedQuizMessages);
+    }
+
+    // Check if quiz is completed from localStorage
+    const isQuizCompleted = localStorage.getItem(`quizCompleted_${room}`);
+    if (isQuizCompleted === 'true') {
+      setQuizCompleted(true);
+    }
+  }, [room]);
+
+  useEffect(() => {
     if (currentQuestionIndex < quizQuestions.length) {
       const { correctAnswer, incorrectAnswers } = quizQuestions[currentQuestionIndex];
       const allAnswers = shuffleArray([correctAnswer, ...incorrectAnswers]);
       setCurrentVariants(allAnswers);
+    } else {
+      // Quiz completed
+      setQuizCompleted(true);
+
+      // Set quiz completed flag in localStorage
+      localStorage.setItem(`quizCompleted_${room}`, 'true');
     }
   }, [currentQuestionIndex]);
 
@@ -146,13 +171,26 @@ function Quiz({ room }) {
       if (question) {
         console.log(`Sending answer: ${selectedAnswer} for question: ${question}`);
         socket.emit('sendQuizAnswer', { room, question, selectedAnswer });
-        setAnswer('');
-        setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
+        
+        // Update current question index
+        const newIndex = currentQuestionIndex + 1;
+        setCurrentQuestionIndex(newIndex);
+        localStorage.setItem(`currentQuestionIndex_${room}`, newIndex);
+
+        // Update quiz messages
+        const updatedQuizMessages = [...quizMessages, `Question: ${question}, Answer: ${selectedAnswer}`];
+        setQuizMessages(updatedQuizMessages);
+        localStorage.setItem(`quizMessages_${room}`, JSON.stringify(updatedQuizMessages));
+
+        // Check if all questions answered
+        if (newIndex === quizQuestions.length) {
+          // Set quiz completed flag in localStorage
+          localStorage.setItem(`quizCompleted_${room}`, 'true');
+          setQuizCompleted(true);
+        }
       }
     }
   };
-
-  const quizCompleted = currentQuestionIndex >= quizQuestions.length;
 
   const currentQuestion = quizQuestions[currentQuestionIndex];
   const image = currentQuestion?.image || currentQuestion?.ifNotImage;
@@ -160,21 +198,21 @@ function Quiz({ room }) {
   return (
     <div className="flex flex-col items-center justify-center border-warning border border-opacity-40 h-[85vh] xl:min-w-[500px] shadow-md shadow-warning rounded-lg w-full bg-base-100">
       <div className="w-full p-10 h-full bg-base-300 shadow-md rounded-lg flex flex-col justify-between">
-        <div className="mb-2 p-2 bg-warning text-white rounded-md">
-          {currentQuestion?.question}
+        <div className="mb-2 p-2 bg-warning text-white font-semibold text-xl rounded-md text-center">
+          {!quizCompleted ? currentQuestion?.question : 'You completed the quiz'}
         </div>
         <div className="min-h-[55%] overflow-y-scroll flex justify-center items-center mb-4 border border-warning border-opacity-25 rounded-md p-2">
           {!quizCompleted ? (
             <>
-              <div className="flex justify-center items-center mb-4">
-                <LazyLoadImage
-                  alt={image.alt}
-                  height={image.height}
-                  src={image.src}
-                  width={image.width}
-                  effect="blur"
-                />
-              </div>
+              {image && (
+                <div className="flex justify-center items-center mb-4 max-w-[30%] max-h-[40%] rounded-lg">
+                  <LazyLoadImage
+                    alt={image.alt || ''}
+                    src={image.src || ''}
+                    effect="blur"
+                  />
+                </div>
+              )}
             </>
           ) : (
             <div className="text-center text-green-600 text-xl">
@@ -182,6 +220,7 @@ function Quiz({ room }) {
             </div>
           )}
         </div>
+
         {!quizCompleted && (
           <div className="flex flex-wrap items-center gap-x-[2%] gap-y-5">
             {currentVariants.map((variant, index) => (

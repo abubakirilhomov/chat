@@ -7,26 +7,49 @@ const JoinRoom = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [room, setRoomInput] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
-  const handleJoinRoom = () => {
-    dispatch(setRoom(room));
-    navigate('/room/' + room);
+  const handleJoinRoom = (e) => {
+    e.preventDefault();
+    if (room) {
+      dispatch(setRoom(room));
+      navigate('/room/' + room);
+    } else {
+      setErrorMessage('Please fill in the room ID');
+    }
+  };
+
+  const handleCreateRoom = (e) => {
+    e.preventDefault();
+    if (room) {
+      dispatch(setRoom(room));
+      // Implement room creation logic if needed
+      navigate('/room/' + room);
+    } else {
+      setErrorMessage('Please fill in the room ID');
+    }
   };
 
   const handleChange = (e) => {
     setRoomInput(e.target.value);
+    if (e.target.value) {
+      setErrorMessage('');
+    }
   };
 
   return (
     <div className='flex items-center flex-col justify-center h-screen'>
-      <div className='flex flex-col gap-2 w-1/2'>
+      <form className='flex flex-col gap-2 w-1/2'>
         <input 
           onChange={handleChange} 
           type="number" 
-          placeholder='type ID room' 
+          placeholder='Type ID room' 
           required
           className='bg-transparent placeholder:text-primary border-2 rounded-lg border-primary py-2 px-4 outline-none text-primary' 
         />
+        {errorMessage && (
+          <p className='text-red-500'>{errorMessage}</p>
+        )}
         <div className='flex items-center gap-2 justify-center'>
           <button 
             onClick={handleJoinRoom} 
@@ -35,13 +58,13 @@ const JoinRoom = () => {
             Join Chat Room
           </button>
           <button 
-            onClick={handleJoinRoom} 
+            onClick={handleCreateRoom} 
             className='w-full bg-primary text-white py-2 rounded-box flex-1'
           >
             Create Chat Room
           </button>
         </div>
-      </div>  
+      </form>  
     </div>
   );
 };
