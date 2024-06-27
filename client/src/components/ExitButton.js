@@ -26,7 +26,7 @@ const ExitButton = ({ room }) => {
   };
 
   return (
-    <button onClick={handleExit} className="p-2 flex items-center text-lg btn btn-warning min-w-[19.5%] max-w-[20%] mb-5 text-white rounded-md">
+    <button onClick={handleExit} className="p-2 flex items-center text-lg btn btn-warning min-w-[19.5%] max-w-[100%] mb-5 text-white rounded-md">
       <IoMdHome /> Back to Home
     </button>
   );

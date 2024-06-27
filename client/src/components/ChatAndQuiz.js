@@ -9,14 +9,14 @@ const ChatAndQuiz = () => {
 
   return (  
     <div className='p-5'>
-      <ExitButton room={roomId}/>
+      <ExitButton room={roomId} />
 
-      <div className="flex justify-between bg-base-100">
-        <div className='pw-3/12 max-w-[20%]'>
+      <div className="flex flex-col gap-4 lg:flex-row lg:gap-6 justify-between bg-base-100">
+        <div className='w-full lg:w-1/4'>
           <Chat room={roomId} /> 
         </div>
-        <div className='w-9/12 flex flex-col xl:flex-row xl:gap-4'>
-          <Quiz room={roomId}/>
+        <div className='w-full lg:w-3/4 flex flex-col xl:flex-row xl:gap-4'>
+          <Quiz room={roomId} />
         </div>
       </div>
     </div>
