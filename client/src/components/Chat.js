@@ -63,8 +63,8 @@ function Chat({ room }) {
 
   return (
     <div className="flex flex-col items-center justify-center h-[85vh] w-full shadow-md shadow-warning rounded-lg">
-      <div className="w-full h-full p-4 bg-base-300 shadow-md rounded-lg">
-        <div className="min-h-[90%] max-h-[90%] overflow-y-scroll mb-4 border border-warning border-opacity-20 rounded-md p-2">
+      <div className="max-w-[99%] lg:w-full h-[100%] p-4 bg-base-300 shadow-md rounded-lg">
+        <div className="min-h-[70%] max-h-[90%] lg:min-h-[90%] overflow-y-scroll mb-4 border border-warning border-opacity-20 rounded-md p-2">
           {messages.map((msg, index) => (
             <div
               key={msg.id || index} // Ensure a unique key even if id is missing
