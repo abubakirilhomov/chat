@@ -62,9 +62,9 @@ function Chat({ room }) {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-[85vh] w-full shadow-md shadow-warning rounded-lg">
-      <div className="max-w-[99%] lg:w-full h-[100%] p-4 bg-base-300 shadow-md rounded-lg">
-        <div className="min-h-[70%] max-h-[90%] lg:min-h-[90%] overflow-y-scroll mb-4 border border-warning border-opacity-20 rounded-md p-2">
+    <div className="flex flex-col items-center justify-center h-[85vh] w-full shadow-md shadow-warning rounded-lg py- lg:p-2">
+      <div className="max-w-[99%] lg:max-w-[97%] lg:w-full h-[100%] p-2 py-2 lg:p-2 bg-base-300 shadow-md rounded-lg">
+        <div className="min-h-[70%] max-h-[90%] lg:min-h-[90%] overflow-y-scroll mb-4 py-2 border border-warning border-opacity-20 rounded-md">
           {messages.map((msg, index) => (
             <div
               key={msg.id || index} // Ensure a unique key even if id is missing
@@ -98,20 +98,20 @@ function Chat({ room }) {
             </div>
           ))}
         </div>
-        <div className="flex w-full mt-2">
+        <div className="flex w-full mt-2 ">
           <input
             type="text"
             value={message}
             onChange={inputHandler}
             onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
-            className="flex-grow p-2 rounded-l-md min-h-10 border border-warning placeholder:text-warning placeholder:text-sm text-sm"
+            className="flex-grow p-2 rounded-l-md min-h-10 max-h-10 lg:max-h-[10%]  border border-warning placeholder:text-warning placeholder:text-sm text-sm"
             placeholder="Type a message..."
           />
           <button
             onClick={sendMessage}
-            className="btn btn-warning rounded-none py-4 px-2 focus:outline-none max-h-10 text-white rounded-r-md "
+            className=" rounded-none bg-yellow-400 px-7 lg:max-h-[10%] focus:outline-none max-h-10  text-white rounded-r-md"
           >
-            <IoSend /> Send
+            <IoSend />
           </button>
         </div>
       </div>
