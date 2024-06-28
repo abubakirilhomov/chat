@@ -50,16 +50,16 @@ const JoinRoom = () => {
         {errorMessage && (
           <p className='text-red-500'>{errorMessage}</p>
         )}
-        <div className='flex items-center gap-2 justify-center'>
+        <div className='flex flex-col lg:flex-row items-center gap-2 justify-center text-xs lg:text-lg'>
           <button 
             onClick={handleJoinRoom} 
-            className='w-full bg-primary text-white py-2 rounded-box flex-1'
+            className='w-full bg-primary text-white py-3 rounded-box flex-1'
           >
             Join Chat Room
           </button>
           <button 
             onClick={handleCreateRoom} 
-            className='w-full bg-primary text-white py-2 rounded-box flex-1'
+            className='w-full bg-primary text-white py-3 rounded-box flex-1'
           >
             Create Chat Room
           </button>
