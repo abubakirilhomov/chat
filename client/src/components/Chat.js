@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import io from 'socket.io-client';
 import { useSelector } from 'react-redux';
+import { motion, AnimatePresence } from 'framer-motion';
 import DEFAULT_AVATAR_URL from '../assets/images/user-default-image.png';
 import { IoSend } from "react-icons/io5";
-
 
 const socket = io('https://chat-back-1-eg9f.onrender.com');
 
@@ -64,39 +64,44 @@ function Chat({ room }) {
   return (
     <div className="flex flex-col items-center justify-center h-[85vh] w-full shadow-md shadow-warning rounded-lg py- lg:p-2">
       <div className="max-w-[99%] lg:max-w-[97%] lg:w-full h-[100%] p-2 py-2 lg:p-2 bg-base-300 shadow-md rounded-lg">
-        <div className="min-h-[70%] max-h-[90%] lg:min-h-[90%] overflow-y-scroll mb-4 py-2 border border-warning border-opacity-20 rounded-md">
-          {messages.map((msg, index) => (
-            <div
-              key={msg.id || index} // Ensure a unique key even if id is missing
-              className={`flex ${msg.isSentByMe ? 'justify-end' : 'justify-start'} mb-2`}
-            >
-              {!msg.isSentByMe && (
-                <div className="flex items-end mr-2">
-                  <div className="w-10 h-10 rounded-full bg-gray-300">
-                    <img alt="User avatar" src={msg.avatar || DEFAULT_AVATAR_URL} className="w-full h-full rounded-full" />
+        <div className="min-h-[70%] max-h-[90%] lg:min-h-[90%] overflow-y-scroll mb-4 py-2 border lg:px-2 border-warning border-opacity-20 rounded-md">
+          <AnimatePresence initial={false}>
+            {messages.map((msg, index) => (
+              <motion.div
+                key={msg.id || index} // Ensure a unique key even if id is missing
+                className={`flex ${msg.isSentByMe ? 'justify-end' : 'justify-start'} mb-2`}
+                initial={{ opacity: 0, y: 100 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, transition: { duration: 0.15 } }}
+              >
+                {!msg.isSentByMe && (
+                  <div className="flex items-end mr-2">
+                    <div className="w-10 h-10 rounded-full bg-gray-300">
+                      <img alt="User avatar" src={msg.avatar || DEFAULT_AVATAR_URL} className="w-full h-full rounded-full" />
+                    </div>
+                  </div>
+                )}
+                <div className={`p-2 rounded-lg max-w-[80%] ${msg.isSentByMe ? 'bg-blue-500 text-white' : 'bg-red-300 text-black'}`}>
+                  <div className="text-sm">
+                    {msg.sender.nickname} <span className="text-xs opacity-70">{msg.time}</span>
+                  </div>
+                  <div className="text-base break-words whitespace-pre-wrap">
+                    {msg.text}
+                  </div>
+                  <div className="text-xs opacity-50">
+                    {msg.footer}
                   </div>
                 </div>
-              )}
-              <div className={`p-2 rounded-lg max-w-[80%] ${msg.isSentByMe ? 'bg-blue-500 text-white' : 'bg-gray-300 text-black'}`}>
-                <div className="text-sm">
-                  {msg.sender.nickname} <span className="text-xs opacity-70">{msg.time}</span>
-                </div>
-                <div className="text-base break-words whitespace-pre-wrap">
-                  {msg.text}
-                </div>
-                <div className="text-xs opacity-50">
-                  {msg.footer}
-                </div>
-              </div>
-              {msg.isSentByMe && (
-                <div className="flex items-end ml-2">
-                  <div className="w-10 h-10 rounded-full bg-gray-300">
-                    <img alt="User avatar" src={msg.avatar || DEFAULT_AVATAR_URL} className="w-full h-full rounded-full" />
+                {msg.isSentByMe && (
+                  <div className="flex items-end ml-2">
+                    <div className="w-10 h-10 rounded-full bg-gray-300">
+                      <img alt="User avatar" src={msg.avatar || DEFAULT_AVATAR_URL} className="w-full h-full rounded-full" />
+                    </div>
                   </div>
-                </div>
-              )}
-            </div>
-          ))}
+                )}
+              </motion.div>
+            ))}
+          </AnimatePresence>
         </div>
         <div className="flex w-full mt-2 ">
           <input
