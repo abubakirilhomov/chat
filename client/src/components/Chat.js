@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import io from 'socket.io-client';
 import { useSelector } from 'react-redux';
 import { motion, AnimatePresence } from 'framer-motion';
-import DEFAULT_AVATAR_URL from '../assets/images/user-default-image.png';
+import DEFAULT_AVATAR_URL from '../assets/images/profile-pic.png';
 import { IoSend } from "react-icons/io5";
 
 const socket = io('https://chat-back-1-eg9f.onrender.com');
