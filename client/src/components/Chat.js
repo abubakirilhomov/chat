@@ -116,7 +116,7 @@ function Chat({ room }) {
             onClick={sendMessage}
             className=" rounded-none bg-yellow-400 px-7 lg:max-h-[10%] focus:outline-none max-h-10  text-white rounded-r-md"
           >
-            <IoSend />
+            <IoSend /> Send
           </button>
         </div>
       </div>
