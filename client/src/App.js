@@ -9,6 +9,7 @@ const App = () => {
   // Manage room state here
   const [room, setRoom] = useState('');
   const state = useSelector((state) => state);
+  const nickname = useSelector((state) => state.nickname);
 
   console.log(state); // For debugging
 

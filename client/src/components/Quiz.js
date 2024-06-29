@@ -111,7 +111,8 @@ function Quiz({ room }) {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [quizMessages, setQuizMessages] = useState([]);
   const [currentVariants, setCurrentVariants] = useState([]);
-  const [quizCompleted, setQuizCompleted] = useState(false); // State to track quiz completion
+  const [quizCompleted, setQuizCompleted] = useState(false);
+  const [correctAnswersCount, setCorrectAnswersCount] = useState(0);
 
   useEffect(() => {
     if (room) {
@@ -132,22 +133,24 @@ function Quiz({ room }) {
   }, [room]);
 
   useEffect(() => {
-    // Load the current question index from localStorage
     const savedQuestionIndex = parseInt(localStorage.getItem(`currentQuestionIndex_${room}`), 10);
     if (!isNaN(savedQuestionIndex) && savedQuestionIndex < quizQuestions.length) {
       setCurrentQuestionIndex(savedQuestionIndex);
     }
 
-    // Load the quiz messages from localStorage
     const savedQuizMessages = JSON.parse(localStorage.getItem(`quizMessages_${room}`));
     if (savedQuizMessages) {
       setQuizMessages(savedQuizMessages);
     }
 
-    // Check if quiz is completed from localStorage
     const isQuizCompleted = localStorage.getItem(`quizCompleted_${room}`);
     if (isQuizCompleted === 'true') {
       setQuizCompleted(true);
+    }
+
+    const savedCorrectAnswersCount = parseInt(localStorage.getItem(`correctAnswersCount_${room}`), 10);
+    if (!isNaN(savedCorrectAnswersCount)) {
+      setCorrectAnswersCount(savedCorrectAnswersCount);
     }
   }, [room]);
 
@@ -157,10 +160,7 @@ function Quiz({ room }) {
       const allAnswers = shuffleArray([correctAnswer, ...incorrectAnswers]);
       setCurrentVariants(allAnswers);
     } else {
-      // Quiz completed
       setQuizCompleted(true);
-
-      // Set quiz completed flag in localStorage
       localStorage.setItem(`quizCompleted_${room}`, 'true');
     }
   }, [currentQuestionIndex]);
@@ -170,21 +170,27 @@ function Quiz({ room }) {
       const question = quizQuestions[currentQuestionIndex]?.question;
       if (question) {
         console.log(`Sending answer: ${selectedAnswer} for question: ${question}`);
+        const isCorrect = selectedAnswer === quizQuestions[currentQuestionIndex].correctAnswer;
+
+        if (isCorrect) {
+          setCorrectAnswersCount((prevCount) => {
+            const newCount = prevCount + 1;
+            localStorage.setItem(`correctAnswersCount_${room}`, newCount);
+            return newCount;
+          });
+        }
+
         socket.emit('sendQuizAnswer', { room, question, selectedAnswer });
-        
-        // Update current question index
+
         const newIndex = currentQuestionIndex + 1;
         setCurrentQuestionIndex(newIndex);
         localStorage.setItem(`currentQuestionIndex_${room}`, newIndex);
 
-        // Update quiz messages
         const updatedQuizMessages = [...quizMessages, `Question: ${question}, Answer: ${selectedAnswer}`];
         setQuizMessages(updatedQuizMessages);
         localStorage.setItem(`quizMessages_${room}`, JSON.stringify(updatedQuizMessages));
 
-        // Check if all questions answered
         if (newIndex === quizQuestions.length) {
-          // Set quiz completed flag in localStorage
           localStorage.setItem(`quizCompleted_${room}`, 'true');
           setQuizCompleted(true);
         }
@@ -216,7 +222,7 @@ function Quiz({ room }) {
             </>
           ) : (
             <div className="text-center text-green-600 text-xl">
-              You passed!
+              You answered {correctAnswersCount} / {quizQuestions.length} questions correctly.
             </div>
           )}
         </div>
