@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import NicknameForm from './components/NicknameForm';
+import NicknameForm from './components/nickNameForm';
 import JoinRoom from './components/JoinRoom';
 import ChatAndQuiz from './components/ChatAndQuiz';
 
