@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import NicknameForm from './components/nickNameForm';
+import NicknameForm from './components/NicknameForm';
 import JoinRoom from './components/JoinRoom';
 import ChatAndQuiz from './components/ChatAndQuiz';
 
@@ -17,8 +17,8 @@ const App = () => {
     <Router>
       <Routes>
         <Route path="/" element={<NicknameForm room={room} setRoom={setRoom} />} />
-        <Route path="/join-room" element={<JoinRoom setRoom={setRoom} />} />
-        <Route path="/room/:roomId" element={<ChatAndQuiz />} />
+        <Route path="/join-room" element={<JoinRoom />} />
+        <Route path="/room/:roomId" element={<ChatAndQuiz nickname={nickname} />} />
       </Routes>
     </Router>
   );

@@ -107,7 +107,7 @@ function shuffleArray(array) {
   return array.sort(() => Math.random() - 0.5);
 }
 
-function Quiz({ room }) {
+function Quiz({ room, nickname }) {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [quizMessages, setQuizMessages] = useState([]);
   const [currentVariants, setCurrentVariants] = useState([]);
@@ -169,9 +169,7 @@ function Quiz({ room }) {
     if (selectedAnswer.trim() && room) {
       const question = quizQuestions[currentQuestionIndex]?.question;
       if (question) {
-        console.log(`Sending answer: ${selectedAnswer} for question: ${question}`);
         const isCorrect = selectedAnswer === quizQuestions[currentQuestionIndex].correctAnswer;
-
         if (isCorrect) {
           setCorrectAnswersCount((prevCount) => {
             const newCount = prevCount + 1;
@@ -180,7 +178,7 @@ function Quiz({ room }) {
           });
         }
 
-        socket.emit('sendQuizAnswer', { room, question, selectedAnswer });
+        socket.emit('sendQuizAnswer', { room, question, selectedAnswer, nickname });
 
         const newIndex = currentQuestionIndex + 1;
         setCurrentQuestionIndex(newIndex);
@@ -197,6 +195,7 @@ function Quiz({ room }) {
       }
     }
   };
+  
 
   const currentQuestion = quizQuestions[currentQuestionIndex];
   const image = currentQuestion?.image || currentQuestion?.ifNotImage;
