@@ -1,57 +1,34 @@
-import React, { useState, useEffect } from 'react';
-import { IoStatsChart } from "react-icons/io5";
-import io from 'socket.io-client';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
-const socket = io('https://chat-back-1-eg9f.onrender.com');
-
-const RatingModal = ({ room }) => {
-  const [results, setResults] = useState([]);
+function RatingModal({ isOpen, onClose }) {
+  const [ratings, setRatings] = useState([]);
 
   useEffect(() => {
-    const handleReceiveResults = (results) => {
-      setResults(Object.entries(results).map(([nickname, { correctAnswersCount, totalQuestions }]) => ({
-        nickname,
-        correctAnswersCount,
-        totalQuestions,
-      })));
-    };
-
-    socket.on('receiveResults', handleReceiveResults);
-
-    return () => {
-      socket.off('receiveResults', handleReceiveResults);
-    };
-  }, []);
-
-  const fetchResults = () => {
-    socket.emit('getResults', room);
-    document.getElementById('my_modal_4').showModal();
-  };
+    if (isOpen) {
+      axios.get('https://your-server-url/ratings')
+        .then(response => {
+          setRatings(response.data);
+        })
+        .catch(error => {
+          console.error('Error fetching ratings:', error);
+        });
+    }
+  }, [isOpen]);
 
   return (
-    <div>
-      <button className="btn btn-warning text-white" onClick={fetchResults}>
-        <IoStatsChart /> See ratings
-      </button>
-      <dialog id="my_modal_4" className="modal">
-        <div className="modal-box w-11/12 max-w-5xl">
-          {results.map(user => (
-            <div key={user.nickname}>
-              <h3 className="font-bold text-lg">{user.nickname}</h3>
-              <p className="py-4">
-                {user.correctAnswersCount} / {user.totalQuestions}
-              </p>
-            </div>
+    <div className={`modal ${isOpen ? 'is-open' : ''}`}>
+      <div className="modal-content">
+        <button onClick={onClose} className="modal-close">Close</button>
+        <h2>Ratings</h2>
+        <ul>
+          {ratings.map((rating, index) => (
+            <li key={index}>{rating.nickname}: {rating.correctAnswersCount} / {rating.totalQuestions}</li>
           ))}
-          <div className="modal-action">
-            <form method="dialog">
-              <button className="btn btn-warning">Close</button>
-            </form>
-          </div>
-        </div>
-      </dialog>
+        </ul>
+      </div>
     </div>
   );
-};
+}
 
 export default RatingModal;

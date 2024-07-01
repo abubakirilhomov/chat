@@ -163,6 +163,17 @@ function Quiz({ room, nickname }) {
       setQuizCompleted(true);
       localStorage.setItem(`quizCompleted_${room}`, 'true');
     }
+
+    axios.post('https://your-server-url/results', {
+      nickname,
+      correctAnswersCount,
+      totalQuestions: quizQuestions.length
+    }).then(response => {
+      console.log('Results saved:', response.data);
+    }).catch(error => {
+      console.error('Error saving results:', error);
+    });
+    
   }, [currentQuestionIndex]);
 
   const sendAnswer = (selectedAnswer) => {
