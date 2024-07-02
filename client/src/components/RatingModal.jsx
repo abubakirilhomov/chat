@@ -6,7 +6,7 @@ function RatingModal({ isOpen, onClose }) {
 
   useEffect(() => {
     if (isOpen) {
-      axios.get('https://your-server-url/ratings')
+      axios.get('http://localhost:3001/api/ratings') // Update the URL as needed
         .then(response => {
           setRatings(response.data);
         })
