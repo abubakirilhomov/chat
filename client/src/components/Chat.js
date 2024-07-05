@@ -81,7 +81,7 @@ function Chat({ room }) {
                     </div>
                   </div>
                 )}
-                <div className={`p-2 rounded-lg max-w-[80%] ${msg.isSentByMe ? 'bg-blue-500 text-white' : 'bg-gray-300 text-black'}`}>
+                <div className={`p-2 rounded-lg max-w-[80%] ${msg.isSentByMe ? 'bg-blue-500 text-white' : 'bg-red-500 text-black'}`}>
                   <div className="text-sm">
                     {msg.sender.nickname} <span className="text-xs opacity-70">{msg.time}</span>
                   </div>
