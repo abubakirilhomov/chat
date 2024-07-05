@@ -64,7 +64,7 @@ function Chat({ room }) {
   return (
     <div className="flex flex-col items-center justify-center h-[85vh] w-full shadow-md shadow-warning rounded-lg py- lg:p-2">
       <div className="max-w-[99%] lg:max-w-[97%] lg:w-full h-[100%] p-2 py-2 lg:p-2 bg-base-300 shadow-md rounded-lg">
-        <div className="min-h-[70%] max-h-[90%] lg:min-h-[90%] overflow-y-scroll mb-4 py-2 border lg:px-2 border-warning border-opacity-20 rounded-md">
+        <div className="min-h-[70%] max-h-[90%] lg:min-h-[90%] overflow-y-scroll mb-4 py-2 border border-warning border-opacity-20 rounded-md">
           <AnimatePresence initial={false}>
             {messages.map((msg, index) => (
               <motion.div
@@ -81,7 +81,7 @@ function Chat({ room }) {
                     </div>
                   </div>
                 )}
-                <div className={`p-2 rounded-lg max-w-[80%] ${msg.isSentByMe ? 'bg-blue-500 text-white' : 'bg-red-500 text-black'}`}>
+                <div className={`p-2 rounded-lg max-w-[80%] ${msg.isSentByMe ? 'bg-blue-500 text-white' : 'bg-gray-300 text-black'}`}>
                   <div className="text-sm">
                     {msg.sender.nickname} <span className="text-xs opacity-70">{msg.time}</span>
                   </div>
